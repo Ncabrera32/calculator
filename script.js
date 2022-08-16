@@ -1,3 +1,20 @@
+//this creates my calculator object to help keep track of values
+const calculator = {
+    displayValue: '0',
+    firstOperand: null,
+    waitingForSecondOperand: false,
+    operator: null,
+  };
+// to update the display I need to make a function in that funciton I need to name my const and is "display" 
+// calculator-screen is selecting my display for the calculator
+// calculator.displayValue pulls 0 from my calculator object 
+// adding .value to the end of my const of display, inputs the 0 from calculator.displayValue into the input field for my calculator screen  
+function updateDisplay(){
+const display = document.querySelector('.calculator-screen');
+display.value = calculator.displayValue
+}
+
+updateDisplay();
 
 function add(num1, num2){
     let result = num1 + num2
