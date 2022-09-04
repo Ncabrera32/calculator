@@ -9,3 +9,5 @@ this is the calculator I have been working on for a bit. i built it off git to s
 4th commit got the keys working.
 
 5th commit got the reset calculator button working, fixed decimal bug, and cleaned up event listners.
+
+6th commit cal is finished
