@@ -5,6 +5,60 @@ const calculator = {
     waitingForSecondOperand: false,
     operator: null,
   };
+
+  function inputDigit(digit) {
+    const { displayValue, waitingForSecondOperand } = calculator;
+  
+    if (waitingForSecondOperand === true) {
+      calculator.displayValue = digit;
+      calculator.waitingForSecondOperand = false;
+    } else {
+      calculator.displayValue = displayValue === '0' ? digit : displayValue + digit;
+    }
+  
+    console.log(calculator);
+  }
+
+function inputDecimal(dot) {
+  // If the `displayValue` property does not contain a decimal point
+  if (!calculator.displayValue.includes(dot)) {
+    // Append the decimal point
+    calculator.displayValue += dot;
+  }
+}
+
+function handleOperator(nextOperator) {
+  const { firstOperand, displayValue, operator } = calculator
+  const inputValue = parseFloat(displayValue);
+
+  if (firstOperand == null && !isNaN(inputValue)) {
+    calculator.firstOperand = inputValue;
+  } else if (operator) {
+    const result = calculate(firstOperand, inputValue, operator);
+
+    calculator.displayValue = String(result);
+    calculator.firstOperand = result;
+  }
+
+  calculator.waitingForSecondOperand = true;
+  calculator.operator = nextOperator;
+  console.log(calculator);
+}
+
+function calculate(firstOperand, secondOperand, operator) {
+  if (operator === '+') {
+    return firstOperand + secondOperand;
+  } else if (operator === '-') {
+    return firstOperand - secondOperand;
+  } else if (operator === '*') {
+    return firstOperand * secondOperand;
+  } else if (operator === '/') {
+    return firstOperand / secondOperand;
+  }
+
+  return secondOperand;
+}
+
 // to update the display I need to make a function in that funciton I need to name my const and is "display" 
 // calculator-screen is selecting my display for the calculator
 // calculator.displayValue pulls 0 from my calculator object 
@@ -32,15 +86,15 @@ keys.addEventListener('click', (event) => {
   if (!target.matches('button')) {
     return;
   }
-  
+
   if (target.classList.contains('operator')) {
-    console.log('operator', target.value);
-    return;
+    handleOperator(target.value);
+    updateDisplay();
   }
 
   if (target.classList.contains('decimal')) {
-    console.log('decimal', target.value);
-    return;
+    inputDecimal(target.value);
+		updateDisplay();
   }
 
   if (target.classList.contains('all-clear')) {
@@ -48,45 +102,6 @@ keys.addEventListener('click', (event) => {
     return;
   }
 
-  console.log('digit', target.value);
+  inputDigit(target.value);
+  updateDisplay();
 });
-
-function add(num1, num2){
-    let result = num1 + num2
-    return result
-}
-function subtract(num1, num2){
-    let result = num1 - num2
-    return result
-}
-
-function multiply(num1, num2){
-    let result = num1 * num2
-    return result
-}
-
-function divide(num1, num2){
-    let result = num1 / num2
-    return result
-}
-
-function operate(num1, operator, num2){
-if(operator == "150") {
-    return add(num1, num2);
-    } else if(operator == "160") {
-        return subtract(num1, num2);
-    } else if(operator == "170") {
-        return multiply(num1, num2);
-    } else if(operator == "180") {
-        return divide(num1, num2);
-    }
-}
-
-console.log(add(12, 10));
-console.log(subtract(14, 10));
-console.log(multiply(12, 10));
-console.log(divide(12, 6));
-console.log(operate(14, 150, 10));
-console.log(operate(14, 160, 10));
-console.log(operate(14, 170, 10));
-console.log(operate(14, 180, 7));
